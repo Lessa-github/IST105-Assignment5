@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Treasure Hunt</title>
+  <style>
+    body { font-family: sans-serif; margin: 2em; }
+    .results { border: 1px solid #ccc; padding: 1em; margin-top: 2em; background-color: #f9f9f9; }
+    h2, h3 { color: #333; }
+  </style>
+</head>
+<body>
+  <h1>Welcome to the Interactive Treasure Hunt!</h1>
+  <form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Solve the Puzzle</button>
+  </form>
+  
+  {% if results %}
+  <div class="results">
+    <h2>Results:</h2>
+
+    <h3>Number Puzzle:</h3>
+    <p>{{ results.number_puzzle }}</p>
+
+    <h3>Text Puzzle:</h3>
+    <p><strong>Binary:</strong> {{ results.binary_text }}</p>
+    <p><strong>Vowel Count:</strong> {{ results.vowel_count }}</p>
+    
+    <h3>Treasure Hunt:</h3>
+    <p>{{ results.treasure_hunt_secret }}</p>
+    <ul>
+      {% for attempt in results.treasure_hunt_log %}
+      <li>{{ attempt }}</li>
+      {% endfor %}
+    </ul>
+    <p><strong>{{ results.treasure_hunt_result }}</strong></p>
+  </div>
+  {% endif %}
+</body>
+</html>
